@@ -61,7 +61,7 @@ apt install php-gd php-db php-mail php-mail-mime
 ```
 apt install git
 cd /var/www/
-git clone https://github.com/lirantal/daloradius.git
+git clone https://github.com/tersteven83/daloradius-omnis.git
 ```
 
 12. Configure Apache ports:
@@ -148,8 +148,7 @@ mysql -u root -e "GRANT ALL PRIVILEGES ON raddb.* TO 'raduser'@'localhost'";
 ```
 18. Import the required SQL files. In this example it is supposed you are using FreeRADIUS 3.
 ```
-mysql -u root raddb < /var/www/daloradius/contrib/db/fr3-mysql-freeradius.sql
-mysql -u root raddb < /var/www/daloradius/contrib/db/mysql-daloradius.sql
+mysql -u root raddb < /var/www/daloradius/contrib/db/daloradius_freeradiusv3.sql
 ```
 19. Clone the sample configuration file
 ```
