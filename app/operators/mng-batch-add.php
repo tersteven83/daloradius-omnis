@@ -213,7 +213,8 @@
                 $bi_changeuserbillinfo = (!empty($ui_PortalLoginPassword) && isset($_POST['bi_changeuserbillinfo']) && $_POST['bi_changeuserbillinfo'] === '1')
                                        ? '1' : '0';
 
-
+		
+		// asiana "omnis_" eo alohan username_prefix
                 $username_prefix = (array_key_exists('username_prefix', $_POST) && !empty(trim(str_replace("%", "", $_POST['username_prefix']))))
                                  ? trim(str_replace("%", "", $_POST['username_prefix'])) : "";
                 $number = (array_key_exists('number', $_POST) && !empty(trim($_POST['number'])) && intval(trim($_POST['number'])) > 0)
@@ -297,7 +298,7 @@
                                     break;
                             }
 
-                            $username = $username_prefix . $username_suffix;
+                            $username = "omnis_" . $username_prefix . $username_suffix;
 
                             if (user_exists($dbSocket, $username)) {
                                 // $username skipped
