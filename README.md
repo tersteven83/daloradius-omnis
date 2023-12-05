@@ -50,13 +50,6 @@ Thanks goes to these wonderful people :
    pear install -a Mail_Mime
    ```
 
-More details about installation and requirements can be found if needed on the (maybe very old) files:
-
- * INSTALL
- * INSTALL.openSUSE
- * INSTALL.quick
- * INSTALL.win
- * FAQS
 
 # Documentation
 
