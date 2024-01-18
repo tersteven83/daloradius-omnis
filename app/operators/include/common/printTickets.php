@@ -44,11 +44,14 @@
     // we align 3 tables for each row (each line)
     // for each 4th entry of a new ticket table we put it in a new row of it's own
     $trCounter = 0;
+
+   
+
     foreach ($accounts as $account) {
 
         list($user, $pass) = $account;
-
-        if ($trCounter > 2)
+	
+	if ($trCounter > 2)
             $trCounter = 0;
 
         if ($trCounter == 2)
@@ -127,6 +130,7 @@
 
         $trCounter++;
     }
+    
 
     print "
          <style type='text/css'>
@@ -147,7 +151,7 @@
 
     $ticketInformation = "<strong>Information</strong>:<br>to use this card, please connect your device to the nearest ssid."
                        . "Open your web browser and enter each needed field.";
-    $ticketLogoFile = "../../static/images/daloradius_small.png";
+    $ticketLogoFile = "../../static/images/logo_omnis.png";
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -198,7 +202,17 @@
                 if (!empty($ticketTime)) {
                     $card_foot_height -= 5;
                     $card_body_height += 5;
+		}
+		include_once('../../../common/includes/db_open.php');
+                foreach($accounts as $account){
+                    list($user, $passwd) = $account;
+                    if($user != "Username"){
+                        // mettre à jour la table voucher et la colonne "printed" de chaque voucher_code en 1
+                        $sql = sprintf("UPDATE voucher SET printed=1 WHERE voucher_code='%s'", $dbSocket->escapeSimple($user));
+                        $dbSocket->query($sql);
+                    }
                 }
+                include_once('../../../common/includes/db_close.php');
             
 ?>
 <!DOCTYPE html>
@@ -248,11 +262,10 @@ body {
 
 .card-head img {
     position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 5px;
+    left: 5px;
+    width: 35px;
+    height: 40px;
 }
 
 .card-body {
