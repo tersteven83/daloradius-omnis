@@ -10440,65 +10440,19 @@ INSERT IGNORE INTO `radgroupcheck` (`groupname`,`attribute`,`op`,`value`)
 --
 
 DROP TABLE IF EXISTS `voucher`;
-CREATE TABLE `voucher` (
-  `id` int(11) NOT NULL,
-  `voucher_code` varchar(255) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 0,
-  `telephone_number` varchar(255) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
-  `mac_address` varchar(100) DEFAULT NULL,
-  `printed` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'ce voucher_code est déjà imprimé ou non'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE voucher (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  voucher_code VARCHAR(255) NOT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 0,
+  telephone_number VARCHAR(255) DEFAULT NULL,
+  date DATETIME DEFAULT NULL,
+  mac_address VARCHAR(100) DEFAULT NULL,
+  printed TINYINT(4) NOT NULL DEFAULT 0 COMMENT 'ce voucher_code est imprimé ou non',
+  PRIMARY KEY (id),
+  KEY voucher_code (voucher_code),
+  CONSTRAINT voucher_ibfk_1 FOREIGN KEY (voucher_code) REFERENCES radcheck (username) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `voucher`
---
-ALTER TABLE `voucher`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `voucher_code` (`voucher_code`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `voucher`
---
-ALTER TABLE `voucher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `voucher`
---
-ALTER TABLE `voucher`
-  ADD CONSTRAINT `voucher_ibfk_1` FOREIGN KEY (`voucher_code`) REFERENCES `radcheck` (`username`) ON DELETE CASCADE;
-
--- -------------- TRIGGER
-CREATE TRIGGER `voucher_delete` AFTER DELETE ON `radcheck`
- FOR EACH ROW BEGIN
-		IF OLD.username LIKE 'omnis_%' THEN
-			DELETE FROM voucher
-			WHERE voucher_code = OLD.username;
-		END IF;
-	END
-
-CREATE TRIGGER `voucher_insert` AFTER INSERT ON `radcheck`
- FOR EACH ROW BEGIN
-  IF NEW.username LIKE 'omnis_%' THEN
-    IF NOT EXISTS(SELECT 1 FROM voucher WHERE voucher_code = NEW.username) THEN
-      INSERT INTO voucher (voucher_code, is_active)
-      VALUES (NEW.username, 0);
-    END IF;
-  END IF;
-END
 
 -- --------------------------------------------------------
 
@@ -10533,6 +10487,30 @@ ALTER TABLE `number_auth`
 --
 ALTER TABLE `number_auth`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+-- -------------- TRIGGER
+DELIMITER //
+CREATE TRIGGER `voucher_delete` AFTER DELETE ON `radcheck`
+ FOR EACH ROW 
+ BEGIN
+	IF OLD.username LIKE 'omnis_%' THEN
+		DELETE FROM voucher 
+		WHERE voucher_code = OLD.username;
+	END IF;
+ END; //
+
+CREATE TRIGGER `voucher_insert` AFTER INSERT ON `radcheck`
+ FOR EACH ROW BEGIN
+  IF NEW.username LIKE 'omnis_%' THEN
+    IF NOT EXISTS(SELECT 1 FROM voucher WHERE voucher_code = NEW.username) THEN
+      INSERT INTO voucher (voucher_code, is_active)
+      VALUES (NEW.username, 0);
+    END IF;
+  END IF;
+END; //
+
+DELIMITER ;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

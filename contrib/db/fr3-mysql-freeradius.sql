@@ -77,7 +77,8 @@ CREATE TABLE IF NOT EXISTS radcheck (
   op char(2) NOT NULL DEFAULT '==',
   value VARCHAR(253) NOT NULL DEFAULT '',
   PRIMARY KEY (id),
-  KEY username (username(32))
+  KEY username (username(32)),
+  KEY `username_2` (`username`)
 );
 
 #

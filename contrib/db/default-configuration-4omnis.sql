@@ -7,17 +7,17 @@
 --
 
 INSERT INTO `radgroupcheck` (`id`, `groupname`, `attribute`, `op`, `value`) VALUES
-(1, 'Personnel', 'Simultaneous-Use', ':=', '3'),
-(2, 'Personnel', 'Login-Time', ':=', 'Al0730-1730'),
-(3, 'Guest', 'Auth-Type', ':=', 'reject'),
-(4, 'Weekly-Connection', 'Max-Weekly-Session', ':=', '604800'),
-(5, 'Monthly-Connection', 'Max-Monthly-Session', ':=', '2629440'),
-(6, 'Yearly-Connection', 'Max-Yearly-Session', ':=', '31557600'),
-(7, '2GB/wk', 'CS-Total-Octets-Weekly', ':=', '2147483648'),
-(8, '12GB/mnth', 'CS-Total-Octets-Monthly', ':=', '12884901888'),
-(9, 'Daily-Connection', 'Max-Daily-Session', ':=', '864000'),
-(10, '500MB/day', 'CS-Total-Octets-Daily', ':=', '524288000'),
-(11, 'Guest', 'Login-Time', ':=', 'Wk0730-0900');
+(7, 'Personnel', 'Simultaneous-Use', ':=', '3'),
+(8, 'Personnel', 'Login-Time', ':=', 'Al0730-1730'),
+(9, 'Guest', 'Auth-Type', ':=', 'reject'),
+(10, 'Weekly-Connection', 'Max-Weekly-Session', ':=', '604800'),
+(11, 'Monthly-Connection', 'Max-Monthly-Session', ':=', '2629440'),
+(12, 'Yearly-Connection', 'Max-Yearly-Session', ':=', '31557600'),
+(13, '2GB/wk', 'CS-Total-Octets-Weekly', ':=', '2147483648'),
+(14, '12GB/mnth', 'CS-Total-Octets-Monthly', ':=', '12884901888'),
+(15, 'Daily-Connection', 'Max-Daily-Session', ':=', '864000'),
+(16, '500MB/day', 'CS-Total-Octets-Daily', ':=', '524288000'),
+(17, 'Guest', 'Login-Time', ':=', 'Wk0730-0900');
 
 --
 -- Dumping data for table `radgroupreply`
